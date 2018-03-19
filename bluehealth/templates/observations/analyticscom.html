@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <h3> Consolidated Analysis </h3>
+  <canvas id="myChart1"></canvas>
+  <canvas id="myChart2"></canvas>
+  <canvas id="myChart3"></canvas>
+  <canvas id="myChart4"></canvas>
+  <canvas id="myChart5"></canvas>
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static "js/analyticscom.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block sidenav %}
+  {% for key, value in data.items %}
+    <p><a href="#" id="{{key}}">{{value}}</a></p>
+  {% endfor %}
+{% endblock %}
+
+{% block content %}
+  <h3> Single Attribute Analysis </h3>
+  <canvas id="myChart"></canvas>
+{% endblock %}
+{% block javascript %}
+  <script src="{% static "js/analytics.js" %}"></script>
+{% endblock %}

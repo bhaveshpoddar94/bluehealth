@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Welcome</h1>
+  <p> This is a page listing all water bodies under watch. Please select the water bodies you want to monitor</p>
+  <hr>
+  <h3> Water Bodies by location </h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Field Name</th>
+        <th>Field Value</th>
+        <th>Date Created</th>
+      </tr>
+    </thead>
+    {% for key, value in data.items %}
+      <tr>
+        <td> {{ key }} </td>
+        <td>{{ value.0 }} </td>
+        <td>{{ value.1|time:"H:i:s" }} {{ value.1|date:"D d M Y" }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
