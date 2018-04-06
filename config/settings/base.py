@@ -61,7 +61,8 @@ ALLOWED_HOSTS = ['*']
 
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-DATABASES['default'] = dj_database_url.config(default='postgres://poddar:iotproj@localhost:5432/bluehealth2')
+DATABASES['default'] = dj_database_url.config(
+    default='postgres://poddar:iotproj@localhost:5432/bluehealth2')
 
 # Application definition
 DJANGO_APPS = [
@@ -97,7 +98,12 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ),
 }
 
@@ -168,7 +174,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-## STATIC FILE CONFIGURATION
+# STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = str(BASE_DIR('staticfiles'))

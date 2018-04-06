@@ -1,21 +1,29 @@
-from rest_framework.generics import (
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView
-)
-
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics, mixins
+from .permissions import IsOwnerOrReadOnly
 from ..models import Device
 from .serializers import DeviceSerializer
 
 
-class FlavorListCreateAPIView(ListCreateAPIView):
-    queryset = Device.objects.all()
-    permission_classes = (IsAuthenticated, )
+class DeviceAPIView(mixins.CreateModelMixin, generics.ListAPIView):
+    # queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-    lookup_field = 'uuid' # Don't use Flavor.id!
+    lookup_field = 'pk'
+    permissions = [IsOwnerOrReadOnly]
 
-class FlavorRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = Device.objects.all()
-    permission_classes = (IsAuthenticated, )
+    def get_queryset(self):
+        return Device.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class DeviceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    # queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-    lookup_field = 'uuid' # Don't use Flavor.id!
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        return Device.objects.all()
