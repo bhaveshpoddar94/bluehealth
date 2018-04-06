@@ -19,12 +19,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^admin/', admin.site.urls),
     url(
-        r'^api/device/',
+        r'^api/devices/',
         include('bluehealth.devices.api.urls', namespace='api-devices')
     ),
-    url(r'^admin/', admin.site.urls),
-    # url(r'', include('bluehealth.observations.urls')),
+    url(
+        r'^api/observations/',
+        include('bluehealth.observations.api.urls',
+                namespace='api-observations'),
+    ),
+    url(r'observations/', include('bluehealth.observations.urls')),
 ]
 
 if settings.DEBUG:

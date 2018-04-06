@@ -1,6 +1,7 @@
 from django.db import models
-#from bluehealth.devices.models import Device
+# from bluehealth.devices.models import Device
 # Create your models here.
+
 
 class Attribute(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
