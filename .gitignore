@@ -301,6 +301,6 @@ pyvenv.cfg
 pip-selfcheck.json
 
 
-
+staticfiles/
 
 bluehealth/media/
