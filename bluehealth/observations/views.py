@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from .models import Attribute
-from datetime import datetime
 from . import helpers
 
 ATTR = {
@@ -16,19 +15,22 @@ ATTR = {
 }
 
 # Create your views here.
-#for future use
+# for future use
+
+
 def home(request):
     if request.user.is_authenticated:
         return HttpResponse("Welcome {}".format(request.user.username))
     else:
         return HttpResponse("Kindly Login")
 
+
 def list_latest(request):
-    context_dict = {'data':{}}
+    context_dict = {'data': {}}
     for attr in ATTR:
         try:
             instance = Attribute.objects.filter(
-                obs_type = attr
+                obs_type=attr
             ).order_by('-created_at').first()
             context_dict["data"][ATTR[attr][0]] = [instance.value]
             context_dict["data"][ATTR[attr][0]].append(instance.created_at)
@@ -36,7 +38,9 @@ def list_latest(request):
             context_dict["data"][ATTR[attr]] = str(e)
     return render(request, "observations/test.html", context_dict)
 
-#saves attributes to database
+# saves attributes to database
+
+
 def save_attr(request):
     context_dict = {'success': True}
     res = {}
@@ -51,19 +55,21 @@ def save_attr(request):
                 context_dict['error'] = str(e)
     return JsonResponse(context_dict)
 
+
 def analytics(request):
     context_dict = {
         'data': {key: value[0] for (key, value) in ATTR.items()}
     }
     return render(request, "observations/analytics.html", context_dict)
 
+
 def ajax_data(request):
     obv_type = request.GET.get('type', "f1")
     all_data = request.GET.get('all_data', True)
     context_dict = {
         'fieldname': ATTR[obv_type][0],
-        'unit'     : ATTR[obv_type][1],
-        'color'    : ATTR[obv_type][2]
+        'unit': ATTR[obv_type][1],
+        'color': ATTR[obv_type][2]
     }
     orderedEntries = Attribute.objects.filter(obs_type=obv_type)
     if all_data:
@@ -74,23 +80,25 @@ def ajax_data(request):
             helpers.hour_data(orderedEntries)
     return JsonResponse(context_dict)
 
+
 def analytics_com(request):
     return render(request, "observations/analyticscom.html")
+
 
 def ajax_com_data(request):
     obv_type1 = request.GET.get('type1', "f1")
     obv_type2 = request.GET.get('type2', "f3")
-    all_data  = request.GET.get('all_data', True)
+    all_data = request.GET.get('all_data', True)
     context_dict = {}
     context_dict['data1'] = {
         'fieldname': ATTR[obv_type1][0],
-        'unit'     : ATTR[obv_type1][1],
-        'color'    : ATTR[obv_type1][2]
+        'unit': ATTR[obv_type1][1],
+        'color': ATTR[obv_type1][2]
     }
     context_dict['data2'] = {
         'fieldname': ATTR[obv_type2][0],
-        'unit'     : ATTR[obv_type2][1],
-        'color'    : ATTR[obv_type2][2]
+        'unit': ATTR[obv_type2][1],
+        'color': ATTR[obv_type2][2]
     }
     orderedEntries1 = Attribute.objects.filter(obs_type=obv_type1)
     orderedEntries2 = Attribute.objects.filter(obs_type=obv_type2)
@@ -105,6 +113,7 @@ def ajax_com_data(request):
         context_dict['data2']['labels'], context_dict['data2']['values'] =\
             helpers.hour_data(orderedEntries2)
     return JsonResponse(context_dict)
+
 
 def ajax_add_data(request):
     obv_type = request.GET.get('type', "f1")
@@ -123,11 +132,6 @@ def ajax_add_data(request):
     return JsonResponse(context_dict)
 
 
-
-
-
-
-
 # def ajax_data(request):
 #     obv_type = request.GET.get('type', "f1")
 #     context_dict = {
@@ -136,5 +140,6 @@ def ajax_add_data(request):
 #         'color'    : ATTR[obv_type][2]
 #     }
 #     orderedEntries = Attribute.objects.filter(obs_type=obv_type)
-#     context_dict['labels'], context_dict['values'] = helpers.hour_data(orderedEntries)
+#     context_dict['labels'], context_dict['values'] = helpers.hour_data(
+#              orderedEntries)
 #     return JsonResponse(context_dict)

@@ -31,7 +31,7 @@ function makeChart(fieldname, labels, values, unit, color, chart_name){
 function loadData(chartname, type) {
     $.ajax({
       type: "GET",
-      url: '/ajax-data/',
+      url: 'observations/ajax-data/',
       data:{"type": type},
       dataType: 'json',
       success: function (data) {
