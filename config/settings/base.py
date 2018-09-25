@@ -65,6 +65,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'django_celery_beat',
     'django_celery_results',
+    'djcelery_email'
 ]
 
 LOCAL_APPS = [
@@ -102,6 +103,19 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = 'test@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'a3bfia8gn'
+
+EMAIL_USE_TLS = True  # TLS settings
+
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+
 
 # URL Configuration
 # ------------------------------------------------------------------------------
