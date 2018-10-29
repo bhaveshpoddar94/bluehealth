@@ -69,9 +69,12 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'bluehealth.devices.apps.DevicesConfig',
-    'bluehealth.observations.apps.ObservationsConfig',
+    'bluehealth.devices',
+    'bluehealth.observations',
+    'bluehealth.users'
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -216,3 +219,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_URL = '/media/'
 MEDIA_ROOT = str(APPS_DIR('media'))
+
+LOGIN_REDIRECT_URL  = 'home'
+LOGOUT_REDIRECT_URL = 'home'

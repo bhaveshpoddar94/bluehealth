@@ -25,11 +25,10 @@ urlpatterns = [
         include('bluehealth.devices.api.urls', namespace='api-devices')
     ),
     url(
-        r'^api/observations/',
-        include('bluehealth.observations.api.urls',
+        r'^observations/',
+        include('bluehealth.observations.urls',
                 namespace='api-observations'),
     ),
-    url(r'observations/', include('bluehealth.observations.urls')),
 ]
 
 if settings.DEBUG:
